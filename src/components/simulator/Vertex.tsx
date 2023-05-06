@@ -1,4 +1,3 @@
-import { Simulator } from "@/lib/simulator";
 import * as THREE from "three";
 
 export default function Vertex(props) {

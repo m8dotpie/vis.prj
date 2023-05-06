@@ -17,6 +17,7 @@
     "@mui/material": "^5.12.3",
     "@react-three/drei": "^9.65.3",
     "@react-three/fiber": "^8.12.0",
+    "@studio-freight/lenis": "^1.0.12",
     "@use-gesture/react": "^10.2.26",
     "floating-window-ui": "^1.3.6",
     "glsl-random": "^0.0.5",

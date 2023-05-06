@@ -85,6 +85,10 @@ export class Simulator {
     );
   }
 
+  public updateRender() {
+    this._state.updateRender();
+  }
+
   public setStepCallback(callback: any) {
     this._stepCallback = callback;
   }
@@ -114,9 +118,14 @@ export class Simulator {
     let objects = this._state.render();
 
     useFrame(() => {
-      this._state.updateRender();
+      this.updateRender();
     });
 
-    return [...objects, axes];
+    return (
+      <>
+        {axes}
+        {...objects}
+      </>
+    );
   }
 }

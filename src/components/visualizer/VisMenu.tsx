@@ -16,13 +16,17 @@ export default function VisMenu(props) {
 
   let [sim, setSim] = props.sim;
 
-  const sliderRef = useRef();
-  const inputRef = useRef();
+  const sliderRef = useRef<any>();
+  const inputRef = useRef<any>();
 
   sim.setStepCallback((step) => {
     // console.log(sliderRef, sliderRef.current);
-    sliderRef.current.value = step;
-    inputRef.current.value = step;
+    if (sliderRef.current) {
+      sliderRef.current.value = step;
+    }
+    if (inputRef.current) {
+      inputRef.current.value = step;
+    }
     // sliderRef.current
     // sliderRef.current.ariaValueNow = step;
   });

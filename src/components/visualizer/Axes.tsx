@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import { v4 as randomUUID } from "uuid";
 
 export default function Axes() {
   return (
