@@ -21,6 +21,7 @@ const nextConfig = {
     reactRoot: "concurrent",
     appDir: true,
   },
+  output: "export",
   images: {},
   webpack(config, { isServer }) {
     // audio support
