@@ -22,6 +22,8 @@ const nextConfig = {
     appDir: true,
   },
   output: "export",
+  basePath: "/vis.prj",
+  assetPrefix: "/vis.prj/",
   images: {},
   webpack(config, { isServer }) {
     // audio support
