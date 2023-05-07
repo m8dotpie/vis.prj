@@ -66,8 +66,10 @@ const KEYS_TO_OMIT = [
   "assetPrefix",
 ];
 
+const withSvgr = require("next-plugin-svgr");
+
 module.exports = (_phase, { defaultConfig }) => {
-  const plugins = [[withPWA], [withBundleAnalyzer, {}]];
+  const plugins = [[withPWA], [withBundleAnalyzer, {}], [withSvgr, {}]];
 
   const wConfig = plugins.reduce(
     (acc, [plugin, config]) => plugin({ ...acc, ...config }),
