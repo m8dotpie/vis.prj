@@ -5,16 +5,20 @@ import { FileUploader } from "react-drag-drop-files";
 import { Slider } from "@mui/material";
 import Image from "next/image";
 
-import Upload from "@/components/svgs/icons8-upload.svg";
+import { v4 as randomUUID } from "uuid";
 
+import History from "@/components/visualizer/History";
+import Upload from "@/components/svgs/icons8-upload.svg";
+import { HistoryManager } from "@/components/visualizer/History";
 import Player from "./Player";
 
 export default function VisMenu(props) {
   const [autoStepping, setAutoStepping] = useState(false);
   let [file, setFile] = useState(null);
   let [simData, setSimData] = useState(null);
-
   let [sim, setSim] = props.sim;
+
+  let [hMan, setHMan] = useState(new HistoryManager());
 
   const sliderRef = useRef<any>();
   const inputRef = useRef<any>();
@@ -31,10 +35,25 @@ export default function VisMenu(props) {
     // sliderRef.current.ariaValueNow = step;
   });
 
+  const backupAndSetSimData = (data) => {
+    console.log("Trying to backup the data.");
+    if (simData && !simData.id) {
+      if (!simData.name) {
+        simData.name = "Untitled";
+      }
+      setHMan((hMan) => {
+        hMan.push(randomUUID(), simData);
+        return hMan;
+      });
+    }
+
+    setSimData(data);
+  };
+
   const handleFile = async (file) => {
     setFile(file);
     let data = await file.text();
-    setSimData(JSON.parse(data));
+    backupAndSetSimData(JSON.parse(data));
   };
 
   useEffect(() => {
@@ -50,10 +69,17 @@ export default function VisMenu(props) {
     }
   }, [simData]);
 
+  function loadHistory(id) {
+    let historyElement = hMan.access(id);
+    historyElement.data.id = id;
+    // console.log("Trying to set this data:", historyElement.data);
+    backupAndSetSimData(historyElement.data);
+  }
+
   return (
     <Draggable handle="strong">
       <div
-        className={`m-4 px-4 py-2 w-[10rem] absolute z-[10000] flex flex-col justify-start items-start bg-gray-400 rounded-md border border-gray-200`}
+        className={`m-4 px-4 py-2 w-[12rem] absolute z-[10000] flex flex-col justify-start items-start bg-gray-400 rounded-md border border-gray-200`}
       >
         <strong className="text-white select-none">VisMenu</strong>
         <FileUploader
@@ -103,6 +129,7 @@ export default function VisMenu(props) {
           onBackstep={() => sim.oneBackstep()}
           onReplay={() => sim.reset()}
         />
+        <History hMan={hMan} onClick={loadHistory} />
       </div>
     </Draggable>
   );
