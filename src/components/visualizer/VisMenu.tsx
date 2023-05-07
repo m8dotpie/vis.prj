@@ -1,9 +1,9 @@
 import { Simulator } from "@/lib/Simulator";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import Draggable from "react-draggable";
 import { FileUploader } from "react-drag-drop-files";
-import { Slider } from "@mui/material";
-import Image from "next/image";
+
+import { ThemeContext } from "@/components/dom/Layout";
 
 import { v4 as randomUUID } from "uuid";
 
@@ -13,6 +13,7 @@ import { HistoryManager } from "@/components/visualizer/History";
 import Player from "./Player";
 
 export default function VisMenu(props) {
+  const theme = useContext(ThemeContext);
   const [autoStepping, setAutoStepping] = useState(false);
   let [file, setFile] = useState(null);
   let [simData, setSimData] = useState(null);
@@ -77,33 +78,38 @@ export default function VisMenu(props) {
   }
 
   return (
-    <Draggable handle="strong">
+    <Draggable handle=".handle">
       <div
-        className={`m-4 px-4 py-2 w-[12rem] absolute z-[10000] flex flex-col justify-start items-start bg-gray-400 rounded-md border border-gray-200`}
+        className={`m-4 w-[12rem] absolute z-[10000] flex flex-col justify-start items-start bg-primary rounded-md shadow-md shadow-shadow`}
       >
-        <strong className="text-white select-none">VisMenu</strong>
-        <FileUploader
-          children={
-            <div className="flex flex-row">
-              <Image src={Upload} alt="Upload" />
-              <div className="flex flex-row justify-center items-center text-white">
-                Upload JSON
+        <div className="handle flex flex-row justify-center items-center w-full">
+          <p className="text-black select-none font-bold">Controller</p>
+        </div>
+        <hr className="bg-shadow w-full"></hr>
+        <div className="py-2 pr-2 w-full flex flex-row justify-center items-center">
+          <FileUploader
+            children={
+              <div className="flex flex-row">
+                <Upload fill={theme.extend.colors.shadow} />
+                <div className="flex flex-row justify-center items-center text-black">
+                  Upload JSON
+                </div>
               </div>
-            </div>
-          }
-          label={"Upload JSON"}
-          handleChange={handleFile}
-          name="file"
-          types={["JSON"]}
-        />
+            }
+            label={"Upload JSON"}
+            handleChange={handleFile}
+            name="file"
+            types={["JSON"]}
+          />
+        </div>
 
-        <div className="flex flex-row justify-center items-center text-white">
+        <div className="flex flex-row justify-center items-center text-white px-2">
           <input
             id="minmax-range"
             type="range"
             min={0}
             max={sim.length - 1}
-            className="w-full h-2 rounded-lg appearance-none cursor-pointer bg-gray-200"
+            className="w-full h-2 rounded-lg appearance-none cursor-pointer bg-secondary accent-shadow"
             ref={sliderRef}
             onChange={(e) => {
               sim.setStep(parseInt(e.target.value));
@@ -111,7 +117,7 @@ export default function VisMenu(props) {
           />
           <input
             type="number"
-            className="w-10 h-5 m-2 text-black bg-gray-200 rounded-md text-xs"
+            className="w-10 h-5 m-2 text-black bg-secondary rounded-md text-xs"
             onChange={(e) => {
               sim.setStep(parseInt(e.target.value));
             }}
