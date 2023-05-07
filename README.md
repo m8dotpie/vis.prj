@@ -1,9 +1,15 @@
-# vis
+# vis.prj
 
-This project was bootstrapped with [`create-r3f-app`](https://github.com/utsuboco/create-r3f-app)
+# Stack
+
+- TypeScript
+- React
+- Next.js
+- Tailwind CSS
+- React-Three-Fiber
 
 # Features
 
 - [x] Points
-- [ ] Segments
+- [x] Segments
 - [ ] Vectors
