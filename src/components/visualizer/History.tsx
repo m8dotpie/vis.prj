@@ -12,12 +12,15 @@ export default function History(props) {
     >
       {elements.map(({ id, name }) => {
         return (
-          <HistoryElement
-            innerId={id}
-            name={name}
-            onClick={onClick}
-            key={randomUUID()}
-          />
+          <>
+            <hr className="w-full bg-shadow" />
+            <HistoryElement
+              innerId={id}
+              name={name}
+              onClick={onClick}
+              key={randomUUID()}
+            />
+          </>
         );
       })}
     </div>
@@ -33,11 +36,7 @@ function HistoryElement(props) {
   }
 
   return (
-    <div
-      ref={ref}
-      id={innerId}
-      className="px-2 py-1 border border-black rounded-md w-full"
-    >
+    <div ref={ref} id={innerId} className="px-2 py-1 w-full">
       <button onClick={() => handleClick()}>
         {" "}
         {">"} {name}
